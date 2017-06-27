@@ -31,18 +31,23 @@ public class NettyManager {
         mReadListener = readListener;
     }
 
-//    public static NettyManager getInstance(){
-//        if(mInstance == null){
-//            mInstance = new NettyManager();
+    public static NettyManager getInstance(){
+        if(mInstance == null){
+            mInstance = new NettyManager();
 //            mInstance.start();
-//        }
-//
-//        return mInstance;
-//    }
+        }
+
+        return mInstance;
+    }
 
     public void start(){
 
-        System.out.println("服务已经开启了哦");
+        if(mInstance!=null){
+            System.out.println("服务已开启，无需重新开启");
+            return;
+        }
+
+        mInstance = this;
 
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup(4);

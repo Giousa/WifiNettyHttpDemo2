@@ -27,9 +27,20 @@ public class WifiManager implements WifiTools.WifiStartUpListener {
 
         sWifiTools = WifiTools.getInstance(context);
         sWifiTools.setWifiStartUpListener(this);
-        WifiConfiguration wifiConfiguration;
-        wifiConfiguration = sWifiTools.createWifiInfo(wifiName, "12345678");
-        sWifiTools.createHotSpot(wifiConfiguration);
+
+        if(sWifiTools.isWifiApOpen(context)){
+            System.out.println("热点已开启，无需再次启动");
+            if(mWifiStartListener != null){
+                mWifiStartListener.wifiStartListener();
+            }
+        }else {
+            System.out.println("热点未打开，开始创建热点");
+            WifiConfiguration wifiConfiguration;
+            wifiConfiguration = sWifiTools.createWifiInfo(wifiName, "12345678");
+            sWifiTools.createHotSpot(wifiConfiguration);
+        }
+
+
 
     }
 
